@@ -1,10 +1,7 @@
 package com.alpha.POStock.entity;
 
 import com.alpha.POStock.entity.enums.TypeSale;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,5 +20,6 @@ public class Sale {
     private Double total;
     private TypeSale type;
     private Double usedBalance;
+    @ManyToOne
     private User user;
 }
