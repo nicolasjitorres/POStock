@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,15 +19,17 @@ public class CashClosing {
     private Long id;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    private Double totalSales;
-    private Double totalIncome;
-    private Double totalExpenses;
-    private Double initialAmount;
-    private Double finalAmount;
-    private Double totalClosure;
-    @OneToMany
-    private List<Sale> sales;
-    @OneToMany
-    private List<CashMovement> cashMovements;
+    private int totalSales;
+    private BigDecimal totalIncome;
+    private BigDecimal totalExpenses;
+    private BigDecimal initialAmount;
+    private BigDecimal finalAmount;
+    private BigDecimal totalClosure;
     private String observations;
+
+    @OneToMany(mappedBy = "cash_closing")
+    private List<Sale> saleList;
+
+    @OneToMany(mappedBy = "cash_closing")
+    private List<CashMovement> cashMovementList;
 }

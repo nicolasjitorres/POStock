@@ -19,8 +19,10 @@ public class User {
     private String name;
     private String email;
     private String password;
+
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany
-    private List<Sale> sales;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sale> saleList;
 }

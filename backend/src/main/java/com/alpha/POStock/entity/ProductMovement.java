@@ -16,9 +16,13 @@ public class ProductMovement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long productId;
-    @Enumerated(EnumType.STRING)
-    private TypeProductMovement type;
     private int amount;
     private LocalDateTime dateTime;
+
+    @Enumerated(EnumType.STRING)
+    private TypeProductMovement type;
+
+    @ManyToOne
+    @JoinColumn(name = "product_movement_id", nullable = false)
+    private Product product;
 }

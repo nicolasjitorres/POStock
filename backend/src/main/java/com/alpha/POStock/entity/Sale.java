@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -17,9 +19,20 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime dateTime;
-    private Double total;
+    private BigDecimal total;
+    private BigDecimal usedBalance;
+
+    @Enumerated(EnumType.STRING)
     private TypeSale type;
-    private Double usedBalance;
+
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SaleDetail> saleDetailList;
+
+    @ManyToOne
+    @JoinColumn(name = "cash_closing_id")
+    private CashClosing cashClosing;
 }

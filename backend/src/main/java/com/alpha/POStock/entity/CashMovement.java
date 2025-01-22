@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -17,8 +19,13 @@ public class CashMovement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+    private BigDecimal total;
+    private LocalDateTime dateTime;
+
     @Enumerated(EnumType.STRING)
     private TypeCashMovement type;
-    private Double total;
-    private LocalDateTime dateTime;
+
+    @ManyToOne
+    @JoinColumn(name = "cash_closing_id")
+    private CashClosing cashClosing;
 }
