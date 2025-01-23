@@ -27,9 +27,9 @@ public class CashClosing {
     private BigDecimal totalClosure;
     private String observations;
 
-    @OneToMany(mappedBy = "cash_closing")
+    @OneToMany(mappedBy = "cashClosing")
     private List<Sale> saleList;
 
-    @OneToMany(mappedBy = "cash_closing")
+    @OneToMany(mappedBy = "cashClosing")
     private List<CashMovement> cashMovementList;
 }

@@ -20,7 +20,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private String barCode;
-    private int Stock;
+    private int stock;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductMovement> productMovementList;
