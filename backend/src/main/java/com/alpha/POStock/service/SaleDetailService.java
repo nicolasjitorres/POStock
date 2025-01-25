@@ -2,10 +2,10 @@ package com.alpha.POStock.service;
 
 import com.alpha.POStock.entity.SaleDetail;
 import com.alpha.POStock.repository.SaleDetailRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class SaleDetailService {
 
@@ -28,8 +28,8 @@ public class SaleDetailService {
         return saleDetailRepository.findAll();
     }
 
-    public Optional<SaleDetail> getSaleDetailById(Long id){
-        return saleDetailRepository.findById(id);
+    public SaleDetail getSaleDetailById(Long id){
+        return saleDetailRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Detalle de venta no encontrado."));
     }
 
 }

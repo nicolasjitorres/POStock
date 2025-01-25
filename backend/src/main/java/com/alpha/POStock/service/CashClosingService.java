@@ -2,10 +2,10 @@ package com.alpha.POStock.service;
 
 import com.alpha.POStock.entity.CashClosing;
 import com.alpha.POStock.repository.CashClosingRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CashClosingService {
 
@@ -28,8 +28,8 @@ public class CashClosingService {
         return cashClosingRepository.findAll();
     }
 
-    public Optional<CashClosing> getCashClosingById(Long id){
-        return cashClosingRepository.findById(id);
+    public CashClosing getCashClosingById(Long id){
+        return cashClosingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Cierre de caja no encontrado."));
     }
 
 }

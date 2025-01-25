@@ -2,10 +2,10 @@ package com.alpha.POStock.service;
 
 import com.alpha.POStock.entity.CashMovement;
 import com.alpha.POStock.repository.CashMovementRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CashMovementService {
 
@@ -28,8 +28,8 @@ public class CashMovementService {
         return cashMovementRepository.findAll();
     }
 
-    public Optional<CashMovement> getCashMovementById(Long id){
-        return cashMovementRepository.findById(id);
+    public CashMovement getCashMovementById(Long id){
+        return cashMovementRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movimiento de caja no encontrado."));
     }
 
 }

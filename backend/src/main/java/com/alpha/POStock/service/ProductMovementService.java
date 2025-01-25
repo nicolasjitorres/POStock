@@ -2,10 +2,10 @@ package com.alpha.POStock.service;
 
 import com.alpha.POStock.entity.ProductMovement;
 import com.alpha.POStock.repository.ProductMovementRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ProductMovementService {
 
@@ -28,8 +28,8 @@ public class ProductMovementService {
         return productMovementRepository.findAll();
     }
 
-    public Optional<ProductMovement> getProductMovementById(Long id){
-        return productMovementRepository.findById(id);
+    public ProductMovement getProductMovementById(Long id){
+        return productMovementRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Movimiento de producto no encontrado."));
     }
 
 }

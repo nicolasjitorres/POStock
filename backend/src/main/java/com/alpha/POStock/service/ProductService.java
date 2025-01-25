@@ -2,10 +2,10 @@ package com.alpha.POStock.service;
 
 import com.alpha.POStock.entity.Product;
 import com.alpha.POStock.repository.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ProductService {
 
@@ -28,12 +28,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id){
-        return productRepository.findById(id);
+    public Product getProductById(Long id){
+        return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Producto no encontrado."));
     }
 
-    public Optional<Product> getProductByBarCode(String barCode){
-        return productRepository.findByBarCode(barCode);
+    public Product getProductByBarCode(String barCode){
+        return productRepository.findByBarCode(barCode).orElseThrow(() -> new EntityNotFoundException("Producto no encontrado."));
     }
 
 }
