@@ -1,7 +1,6 @@
 package com.alpha.POStock.entity;
 
 import com.alpha.POStock.entity.enums.TypeProductMovement;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

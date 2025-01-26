@@ -1,7 +1,6 @@
 package com.alpha.POStock.service;
 
 import com.alpha.POStock.entity.ProductMovement;
-import com.alpha.POStock.entity.enums.TypeProductMovement;
 import com.alpha.POStock.repository.ProductMovementRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
