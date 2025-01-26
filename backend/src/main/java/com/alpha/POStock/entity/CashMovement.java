@@ -1,6 +1,7 @@
 package com.alpha.POStock.entity;
 
 import com.alpha.POStock.entity.enums.TypeCashMovement;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +27,6 @@ public class CashMovement {
 
     @ManyToOne
     @JoinColumn(name = "cash_closing_id")
+    @JsonIgnore
     private CashClosing cashClosing;
 }

@@ -4,9 +4,11 @@ import com.alpha.POStock.entity.CashClosing;
 import com.alpha.POStock.repository.CashClosingRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CashClosingService {
 
     @Autowired
@@ -16,12 +18,15 @@ public class CashClosingService {
         return cashClosingRepository.save(cashClosing);
     }
 
-    public CashClosing updateCashClosing(CashClosing cashClosing){
-        return cashClosingRepository.save(cashClosing);
+    public CashClosing updateCashClosing(Long id, CashClosing cashClosing){
+        CashClosing foundCashClosing = this.getCashClosingById(id);
+        foundCashClosing.setObservations(cashClosing.getObservations());
+        return cashClosingRepository.save(foundCashClosing);
     }
 
     public void deleteCashClosing(Long id){
-        cashClosingRepository.deleteById(id);
+        CashClosing foundCashClosing = this.getCashClosingById(id);
+        cashClosingRepository.delete(foundCashClosing);
     }
 
     public List<CashClosing> getAllCashClosings(){

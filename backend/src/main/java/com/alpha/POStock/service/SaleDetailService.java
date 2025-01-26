@@ -1,27 +1,44 @@
 package com.alpha.POStock.service;
 
+import com.alpha.POStock.entity.Product;
+import com.alpha.POStock.entity.Sale;
 import com.alpha.POStock.entity.SaleDetail;
 import com.alpha.POStock.repository.SaleDetailRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SaleDetailService {
 
     @Autowired
     private SaleDetailRepository saleDetailRepository;
 
-    public SaleDetail createSaleDetail(SaleDetail saleDetail){
+    @Autowired
+    private SaleService saleService;
+
+    @Autowired
+    private ProductService productService;
+
+    public SaleDetail createSaleDetail(Long saleId, Long productId, SaleDetail saleDetail){
+        Sale foundSale = saleService.getSaleById(saleId);
+        Product foundProduct = productService.getProductById(productId);
+        saleDetail.setSale(foundSale);
+        saleDetail.setProduct(foundProduct);
         return saleDetailRepository.save(saleDetail);
     }
 
-    public SaleDetail updateSaleDetail(SaleDetail saleDetail){
-        return saleDetailRepository.save(saleDetail);
+    public SaleDetail updateSaleDetail(Long saleDetailId, SaleDetail saleDetail){
+        SaleDetail foundSaleDetail = this.getSaleDetailById(saleDetailId);
+        foundSaleDetail.setAmount(saleDetail.getAmount());
+        return saleDetailRepository.save(foundSaleDetail);
     }
 
     public void deleteSaleDetail(Long id){
-        saleDetailRepository.deleteById(id);
+        SaleDetail foundSaleDetail = this.getSaleDetailById(id);
+        saleDetailRepository.delete(foundSaleDetail);
     }
 
     public List<SaleDetail> getAllSaleDetails(){

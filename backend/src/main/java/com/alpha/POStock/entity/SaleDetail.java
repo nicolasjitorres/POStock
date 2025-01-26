@@ -1,5 +1,6 @@
 package com.alpha.POStock.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,9 +21,11 @@ public class SaleDetail {
 
     @ManyToOne
     @JoinColumn(name = "sale_id", nullable = false)
+    @JsonIgnore
     private Sale sale;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
     private Product product;
 }

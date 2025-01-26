@@ -1,6 +1,7 @@
 package com.alpha.POStock.entity;
 
 import com.alpha.POStock.entity.enums.TypeSale;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Sale {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -34,5 +36,6 @@ public class Sale {
 
     @ManyToOne
     @JoinColumn(name = "cash_closing_id")
+    @JsonIgnore
     private CashClosing cashClosing;
 }

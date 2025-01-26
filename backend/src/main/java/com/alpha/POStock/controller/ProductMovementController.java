@@ -9,46 +9,50 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/product_movements")
+@RequestMapping("/api/product-movements")
 public class ProductMovementController {
 
     @Autowired
     private ProductMovementService productMovementService;
 
     @GetMapping
-    public ResponseEntity<?> getAllProductMovements(){
+    public ResponseEntity<?> getAllProductMovements() {
         return ResponseEntity.ok(productMovementService.getAllProductMovements());
     }
 
-    @PostMapping
-    public ResponseEntity<?> createProductMovement(@RequestBody ProductMovement productMovement){
-        return ResponseEntity.ok(productMovementService.creteProductMovement(productMovement));
+    @PostMapping("/product/{productId}")
+    public ResponseEntity<?> createProductMovement(@PathVariable Long productId, @RequestBody ProductMovement productMovement) {
+        try {
+            return ResponseEntity.ok(productMovementService.creteProductMovement(productId, productMovement));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProductMovement(@PathVariable Long id, @RequestBody ProductMovement productMovement){
-        try{
+    public ResponseEntity<?> updateProductMovement(@PathVariable Long id, @RequestBody ProductMovement productMovement) {
+        try {
             return ResponseEntity.ok(productMovementService.updateProductMovement(id, productMovement));
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProductMovement(@PathVariable Long id){
-        try{
+    public ResponseEntity<?> deleteProductMovement(@PathVariable Long id) {
+        try {
             productMovementService.deleteProductMovement(id);
             return ResponseEntity.ok("Movimiento de producto eliminado correctamente.");
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProductMovementById(@PathVariable Long id){
-        try{
+    public ResponseEntity<?> getProductMovementById(@PathVariable Long id) {
+        try {
             return ResponseEntity.ok(productMovementService.getProductMovementById(id));
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }
     }

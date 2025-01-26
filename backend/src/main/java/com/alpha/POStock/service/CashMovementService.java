@@ -4,9 +4,11 @@ import com.alpha.POStock.entity.CashMovement;
 import com.alpha.POStock.repository.CashMovementRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CashMovementService {
 
     @Autowired
@@ -16,12 +18,15 @@ public class CashMovementService {
         return cashMovementRepository.save(cashMovement);
     }
 
-    public CashMovement updateCashMovement(CashMovement cashMovement){
-        return cashMovementRepository.save(cashMovement);
+    public CashMovement updateCashMovement(Long id, CashMovement cashMovement){
+        CashMovement foundCashMovement = this.getCashMovementById(id);
+        foundCashMovement.setDescription(cashMovement.getDescription());
+        return cashMovementRepository.save(foundCashMovement);
     }
 
     public void deleteCashMovement(Long id){
-        cashMovementRepository.deleteById(id);
+        CashMovement foundCashMovement = this.getCashMovementById(id);
+        cashMovementRepository.delete(foundCashMovement);
     }
 
     public List<CashMovement> getAllCashMovements(){

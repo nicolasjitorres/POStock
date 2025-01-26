@@ -4,24 +4,33 @@ import com.alpha.POStock.entity.Sale;
 import com.alpha.POStock.repository.SaleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class SaleService {
 
     @Autowired
     private SaleRepository saleRepository;
 
-    public Sale createSale(Sale sale){
+    @Autowired
+    private UserService userService;
+
+    public Sale createSale(Long userId, Sale sale){
+        sale.setUser(userService.getUserById(userId));
         return saleRepository.save(sale);
     }
 
-    public Sale updateSale(Sale sale){
-        return saleRepository.save(sale);
+    public Sale updateSale(Long id, Sale sale){
+        Sale foundSale = this.getSaleById(id);
+        foundSale.setUsedBalance(sale.getUsedBalance());
+        return saleRepository.save(foundSale);
     }
 
     public void deleteSale(Long id){
-        saleRepository.deleteById(id);
+        Sale foundSale = this.getSaleById(id);
+        saleRepository.delete(foundSale);
     }
 
     public List<Sale> getAllSales(){

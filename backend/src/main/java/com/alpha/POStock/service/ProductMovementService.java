@@ -15,13 +15,19 @@ public class ProductMovementService {
     @Autowired
     private ProductMovementRepository productMovementRepository;
 
-    public ProductMovement creteProductMovement(ProductMovement productMovement){
+    @Autowired
+    private ProductService productService;
+
+    public ProductMovement creteProductMovement(Long productId ,ProductMovement productMovement){
+        productMovement.setProduct(productService.getProductById(productId));
         return productMovementRepository.save(productMovement);
     }
 
     public ProductMovement updateProductMovement(Long id, ProductMovement productMovement){
         ProductMovement foundProductMovement = this.getProductMovementById(id);
-        foundProductMovement.setType(TypeProductMovement.AJUSTE);
+        foundProductMovement.setAmount(productMovement.getAmount());
+        foundProductMovement.setDateTime(productMovement.getDateTime());
+        foundProductMovement.setType(productMovement.getType());
 
         return productMovementRepository.saveAndFlush(foundProductMovement);
     }
