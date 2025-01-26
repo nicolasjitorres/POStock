@@ -4,9 +4,11 @@ import com.alpha.POStock.entity.Product;
 import com.alpha.POStock.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ProductService {
 
     @Autowired
@@ -16,12 +18,16 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product updateProduct(Product product){
-        return productRepository.saveAndFlush(product);
+    public Product updateProduct(Long id, Product product){
+        Product foundProduct = this.getProductById(id);
+        foundProduct.setName(product.getName());
+
+        return productRepository.saveAndFlush(foundProduct);
     }
 
     public void deleteProduct(Long id){
-        productRepository.deleteById(id);
+        Product foundProduct = this.getProductById(id);
+        productRepository.delete(foundProduct);
     }
 
     public List<Product> getAllProducts(){
