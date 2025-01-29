@@ -23,8 +23,8 @@ public class ProductMovementController {
     @PostMapping("/product/{productId}")
     public ResponseEntity<?> createProductMovement(@PathVariable Long productId, @RequestBody ProductMovement productMovement) {
         try {
-            return ResponseEntity.ok(productMovementService.creteProductMovement(productId, productMovement));
-        } catch (EntityNotFoundException e) {
+            return ResponseEntity.ok(productMovementService.createProductMovement(productId, productMovement));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }
     }

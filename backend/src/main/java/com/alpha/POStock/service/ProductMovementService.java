@@ -1,6 +1,9 @@
 package com.alpha.POStock.service;
 
+import com.alpha.POStock.entity.Product;
 import com.alpha.POStock.entity.ProductMovement;
+import com.alpha.POStock.entity.enums.TypeProductMovement;
+import com.alpha.POStock.exception.InsufficientStockException;
 import com.alpha.POStock.repository.ProductMovementRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,18 @@ public class ProductMovementService {
     @Autowired
     private ProductService productService;
 
-    public ProductMovement creteProductMovement(Long productId ,ProductMovement productMovement){
-        productMovement.setProduct(productService.getProductById(productId));
+    public ProductMovement createProductMovement(Long productId, ProductMovement productMovement) {
+        Product foundProduct = productService.getProductById(productId);
+        if (productMovement.getType().equals(TypeProductMovement.EGRESO)){
+            if (foundProduct.getStock() < productMovement.getAmount()){
+                throw new InsufficientStockException("El producto no tiene stock disponible.");
+            }
+            foundProduct.setStock(foundProduct.getStock() - productMovement.getAmount());
+        } else {
+            foundProduct.setStock(foundProduct.getStock() + productMovement.getAmount());
+        }
+        Product updatedProduct = productService.updateProduct(foundProduct.getId(), foundProduct);
+        productMovement.setProduct(updatedProduct);
         return productMovementRepository.save(productMovement);
     }
 

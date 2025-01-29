@@ -21,7 +21,7 @@ public class ProductService {
     public Product updateProduct(Long id, Product product){
         Product foundProduct = this.getProductById(id);
         foundProduct.setName(product.getName());
-
+        foundProduct.setStock(product.getStock());
         return productRepository.saveAndFlush(foundProduct);
     }
 
