@@ -27,7 +27,7 @@ public class SaleService {
     @Autowired
     private SaleDetailService saleDetailService;
 
-    public Sale createSale(Long userId, SaleDTO saleDTO){
+    public Sale createSale(Long userId, SaleDTO saleDTO) {
         Sale sale = new Sale();
         sale.setDateTime(saleDTO.getDateTime());
         sale.setType(saleDTO.getType());
@@ -35,7 +35,7 @@ public class SaleService {
         sale.setUsedBalance(saleDTO.getUsedBalance());
         sale.setUser(userService.getUserById(saleDTO.getUserId()));
         Sale createdSale = saleRepository.save(sale);
-        for (SaleDetailDTO saleDetailDTO : saleDTO.getSaleDetailDTOList()){
+        for (SaleDetailDTO saleDetailDTO : saleDTO.getSaleDetailDTOList()) {
             Product product = productService.getProductById(saleDetailDTO.getProductId());
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(createdSale);
@@ -47,22 +47,22 @@ public class SaleService {
         return createdSale;
     }
 
-    public Sale updateSale(Long id, Sale sale){
+    public Sale updateSale(Long id, Sale sale) {
         Sale foundSale = this.getSaleById(id);
         foundSale.setUsedBalance(sale.getUsedBalance());
         return saleRepository.save(foundSale);
     }
 
-    public void deleteSale(Long id){
+    public void deleteSale(Long id) {
         Sale foundSale = this.getSaleById(id);
         saleRepository.delete(foundSale);
     }
 
-    public List<Sale> getAllSales(){
+    public List<Sale> getAllSales() {
         return saleRepository.findAll();
     }
 
-    public Sale getSaleById(Long id){
+    public Sale getSaleById(Long id) {
         return saleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Venta no encontrada."));
     }
 
