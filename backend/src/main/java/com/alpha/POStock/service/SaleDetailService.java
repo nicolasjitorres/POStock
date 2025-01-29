@@ -16,17 +16,7 @@ public class SaleDetailService {
     @Autowired
     private SaleDetailRepository saleDetailRepository;
 
-    @Autowired
-    private SaleService saleService;
-
-    @Autowired
-    private ProductService productService;
-
-    public SaleDetail createSaleDetail(Long saleId, Long productId, SaleDetail saleDetail){
-        Sale foundSale = saleService.getSaleById(saleId);
-        Product foundProduct = productService.getProductById(productId);
-        saleDetail.setSale(foundSale);
-        saleDetail.setProduct(foundProduct);
+    public SaleDetail createSaleDetail(SaleDetail saleDetail){
         return saleDetailRepository.save(saleDetail);
     }
 

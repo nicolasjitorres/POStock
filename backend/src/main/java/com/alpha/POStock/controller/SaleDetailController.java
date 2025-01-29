@@ -23,7 +23,7 @@ public class SaleDetailController {
     @PostMapping("/sale/{saleId}/product/{productId}")
     public ResponseEntity<?> createSaleDetail(@PathVariable Long saleId, @PathVariable Long productId, @RequestBody SaleDetail saleDetail){
         try{
-            return ResponseEntity.ok(saleDetailService.createSaleDetail(saleId, productId, saleDetail));
+            return ResponseEntity.ok(saleDetailService.createSaleDetail(saleDetail));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }

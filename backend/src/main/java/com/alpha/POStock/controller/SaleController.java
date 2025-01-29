@@ -1,5 +1,6 @@
 package com.alpha.POStock.controller;
 
+import com.alpha.POStock.dto.SaleDTO;
 import com.alpha.POStock.entity.Sale;
 import com.alpha.POStock.service.SaleService;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,9 +22,9 @@ public class SaleController {
     }
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity<?> createSale(@PathVariable Long userId, @RequestBody Sale sale){
+    public ResponseEntity<?> createSale(@PathVariable Long userId, @RequestBody SaleDTO saleDTO){
         try{
-            return ResponseEntity.ok(saleService.createSale(userId, sale));
+            return ResponseEntity.ok(saleService.createSale(userId, saleDTO));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
         }

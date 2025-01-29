@@ -1,6 +1,10 @@
 package com.alpha.POStock.service;
 
+import com.alpha.POStock.dto.SaleDTO;
+import com.alpha.POStock.dto.SaleDetailDTO;
+import com.alpha.POStock.entity.Product;
 import com.alpha.POStock.entity.Sale;
+import com.alpha.POStock.entity.SaleDetail;
 import com.alpha.POStock.repository.SaleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +21,30 @@ public class SaleService {
     @Autowired
     private UserService userService;
 
-    public Sale createSale(Long userId, Sale sale){
-        sale.setUser(userService.getUserById(userId));
-        return saleRepository.save(sale);
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private SaleDetailService saleDetailService;
+
+    public Sale createSale(Long userId, SaleDTO saleDTO){
+        Sale sale = new Sale();
+        sale.setDateTime(saleDTO.getDateTime());
+        sale.setType(saleDTO.getType());
+        sale.setTotal(saleDTO.getTotal());
+        sale.setUsedBalance(saleDTO.getUsedBalance());
+        sale.setUser(userService.getUserById(saleDTO.getUserId()));
+        Sale createdSale = saleRepository.save(sale);
+        for (SaleDetailDTO saleDetailDTO : saleDTO.getSaleDetailDTOList()){
+            Product product = productService.getProductById(saleDetailDTO.getProductId());
+            SaleDetail saleDetail = new SaleDetail();
+            saleDetail.setSale(createdSale);
+            saleDetail.setProduct(product);
+            saleDetail.setAmount(saleDetailDTO.getAmount());
+            saleDetail.setUnitPrice(product.getPrice());
+            saleDetailService.createSaleDetail(saleDetail);
+        }
+        return createdSale;
     }
 
     public Sale updateSale(Long id, Sale sale){

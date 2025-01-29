@@ -20,12 +20,12 @@ public class SaleDetail {
     private BigDecimal unitPrice;
 
     @ManyToOne
-    @JoinColumn(name = "sale_id", nullable = false)
+    @JoinColumn(name = "sale_id")
     @JsonIgnore
     private Sale sale;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     @JsonIgnore
     private Product product;
 }
